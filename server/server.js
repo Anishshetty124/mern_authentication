@@ -4,6 +4,7 @@ import 'dotenv/config';
 import cookieParser from 'cookie-parser';
 import connectdb from './config/mongodb.js';
 import authRouter from './routes/authRoutes.js';
+import userRouter from './routes/userRoutes.js';
 
 const app=express();
 const PORT=process.env.PORT || 4000;
@@ -34,6 +35,7 @@ app.use('/api/auth', authRouter);
 // 👉 /api is used to show this is a backend API.
 // 👉 /auth means this part is for authentication (login/register).
 
+app.use('/api/user',userRouter)
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
