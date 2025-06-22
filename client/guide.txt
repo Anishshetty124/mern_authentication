@@ -1,3 +1,34 @@
+mern-auth/
+├── client/                  # React Frontend
+│   ├── public/              # Static assets
+│   ├── src/
+│   │   ├── assets/          # All images/icons used
+│   │   ├── components/      # Reusable UI components
+│   │   ├── context/         # React Context for auth/user state
+│   │   ├── pages/           # Auth + UI pages (Login, Register, etc.)
+│   │   ├── App.jsx          # Main React app with routing
+│   │   └── main.jsx         # Entry point of React app
+│   └── vite.config.js       # Vite configuration
+│
+├── server/                  # Express Backend
+│   ├── config/
+│   │   ├── nodemailer.js    # Nodemailer transporter setup
+│   │   └── emailTemplates.js# HTML email templates (OTP)
+│   ├── controller/
+│   │   ├── authController.js# Register, Login, OTP logic, etc.
+│   │   └── userController.js# Fetch user data (auth-protected)
+│   ├── middleware/
+│   │   └── userAuth.js      # JWT cookie-based auth middleware
+│   ├── models/
+│   │   └── userModel.js     # Mongoose user schema
+│   ├── routes/
+│   │   ├── authRoutes.js    # Routes for /api/auth/*
+│   │   └── userRoutes.js    # Routes for /api/user/*
+│   ├── .env                 # Environment variables
+│   └── server.js            # Main entry point for backend
+
+
+
 create vite react
 create pages folder 
 keep imgs and all in assets
@@ -70,3 +101,4 @@ use this to make apper name feild only in signup state in <form>
   add this to fields to update values 
 
   we use createContext in Appcontext.js to share data globally in your app without passing props manually at every level.
+  
