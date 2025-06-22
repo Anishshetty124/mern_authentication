@@ -1,0 +1,19 @@
+/* 
+📌 HOW TO USE GOOGLE FONTS
+1. Go to https://fonts.google.com
+2. Choose a font (e.g., Poppins)
+3. Click 'Use Font' → Copy the @import code
+4. Paste it at the top of your CSS file
+5. Use this to apply the font to the whole page:
+      * {
+        font-family: 'Poppins', sans-serif;
+      }
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+*{
+   font-family: "Outfit", sans-serif;
+}

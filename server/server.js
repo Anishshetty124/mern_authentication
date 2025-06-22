@@ -9,11 +9,12 @@ import userRouter from './routes/userRoutes.js';
 const app=express();
 const PORT=process.env.PORT || 4000;
 connectdb();
+const allowedOrigins = ["http://localhost:5173"];
 app.use(express.json());
 app.use(cookieParser());//cookie-parser is a middleware for Express that parses 
 // cookies from the HTTP Request headers and makes them accessible via req.cookies.
 
-app.use(cors({credentials: true}))// cred:true if you need to send cookies/auth headers
+app.use(cors({origin:"http://localhost:5173",credentials: true}))// cred:true if you need to send cookies/auth headers
 //By default, browsers block cross-origin HTTP requests initiated from scripts
 //For example, if your frontend runs on http://localhost:5173 and 
 // your backend API i/s on http://localhost:5000, the browser considers

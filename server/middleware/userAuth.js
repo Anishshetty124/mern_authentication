@@ -1,32 +1,25 @@
-// Userauth.js is used as a middleware used in api endpoints
-//used  to verify the token sent while registration and logging in.
 import jwt from "jsonwebtoken";
 
-//when we use next express automatically treats it as a middleware
 const userAuth = async (req, res, next) => {
-
-  const {token} = req.cookies; 
+  const token = req.cookies.token;
 
   if (!token) {
-    return res.json({ message: "Unauthorized, please login again" });
+    return res.status(401).json({ success: false, message: "Unauthorized, please login again" });
   }
+
   try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    const tokenDecode = jwt.verify(token, process.env.JWT_SECRET);
-
-    if (tokenDecode.id) {
-      
-      req.body.userId = tokenDecode.id; // 👈 You’re attaching userId to body
-    
-    } else {
-
-      return res.json({ message: "Unauthorized" });
+    if (!decoded?.id) {
+      return res.status(401).json({ success: false, message: "Invalid token" });
     }
 
-    next(); 
-  
+    req.userId = decoded.id; // ✅ Attach userId directly to req
+
+    next(); // ✅ Go to the next middleware/controller
+
   } catch (error) {
-    res.status(401).json({ message: "Unauthorized, login again" });
+    res.status(401).json({ success: false, message: "Unauthorized, login again" });
   }
 };
 

@@ -1,0 +1,72 @@
+create vite react
+create pages folder 
+keep imgs and all in assets
+install npm install axios(for api calls) react-router-dom react-toastify(for notifications)
+USE GOOGLE FONTS
+1. Go to https://fonts.google.com
+2. Choose a font (e.g., Poppins)
+3. Click 'Use Font' → Copy the @import code
+4. Paste it at the top of your CSS file
+5. Use this to apply the font to the whole page:
+      * {
+        font-family: 'Poppins', sans-serif;
+      }
+use tailwind by https://v3.tailwindcss.com/docs/guides/vite
+make strictmode to browserrouter in main.jsx by importing react-router-dom
+browserrouter lets you build Single Page Applications (SPAs) 
+by allowing navigation between different components without reloading the page.
+like:  
+<BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+      </Routes>
+</BrowserRouter>
+
+now in app.jsx import {Routes,Route} from rrd as main.jsx have
+<BrowserRouter><app></BrowserRouter>
+
+
+// 📦 1. Import useNavigate from 'react-router-dom'
+// 🚀 2. Call useNavigate() to get the navigate function
+// 📍 3. Use navigate('/route') to go to a new page
+// 🔙 4. Use navigate(-1) to go back
+// 📤 5. Pass data: navigate('/profile', { state: { id: 1 } })
+// 📥 6. Get data: const location = useLocation(); location.state.id
+✅ 1. useNavigate() — for navigation in JS functions (after events, API calls, etc.)
+navigate('/about'); // works inside event handlers like login or form submit
+✅ 2. <Link /> from react-router-dom — for navigation in JSX/UI
+<Link to="/about">Go to About</Link> // works as a clickable element like an anchor tag
+ex: const navigate = useNavigate()
+  const [agreed, setAgreed] = useState(false)
+
+  const handleClick = () => {
+    if (agreed) {
+      // ✅ Only navigate if checkbox is checked
+      navigate('/login')
+    } else {
+      alert('Please agree to continue')
+    }
+
+use this to make apper name feild only in signup state in <form>
+        
+          {state === 'sign up' && (
+            <div className='mb-4 flex items-center gap-3 w-full px-5 py-2.5 rounded-full bg-[#333A5C]'>
+            <img src={assets.person_icon} alt=""/>
+            <input className='bg-transparent outline-none ' type="text" placeholder='Full name' required/>
+          </div>
+        )}
+
+
+
+{state==='sign up'?(<p className='text-gray-400 text-center text-xs mt-4 '>Already have an account? {' '} 
+          <span onClick={() => setState('login')} className='text-blue-400 cursor-pointer underline'>Login here</span>
+        </p>):(<p className='text-gray-400 text-center text-xs mt-4 '>Dont have an account? {' '} 
+          <span onClick={() => setState('sign up')} className='text-blue-400 cursor-pointer underline'>Sign up</span>
+        </p>)}  for to change signup and login
+
+
+ onChange={(e) => setName(e.target.value)} value={name}
+  add this to fields to update values 
+
+  we use createContext in Appcontext.js to share data globally in your app without passing props manually at every level.
