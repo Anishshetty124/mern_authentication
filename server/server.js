@@ -6,38 +6,43 @@ import connectdb from './config/mongodb.js';
 import authRouter from './routes/authRoutes.js';
 import userRouter from './routes/userRoutes.js';
 
-const app=express();
-const PORT=process.env.PORT || 4000;
+const app = express();
+const PORT = process.env.PORT || 4000;
+
+// Connect to MongoDB
 connectdb();
-const allowedOrigins = ["http://localhost:5173"];
+
+// Middlewares
 app.use(express.json());
-app.use(cookieParser());//cookie-parser is a middleware for Express that parses 
-// cookies from the HTTP Request headers and makes them accessible via req.cookies.
+app.use(cookieParser());
 
-app.use(cors({origin:"http://localhost:5173",credentials: true}))// cred:true if you need to send cookies/auth headers
-//By default, browsers block cross-origin HTTP requests initiated from scripts
-//For example, if your frontend runs on http://localhost:5173 and 
-// your backend API i/s on http://localhost:5000, the browser considers
-//  them different origins and blocks requests unless CORS is properly configured.
+// CORS Setup
+const allowedOrigins = [
+  "http://localhost:5173",                  // for development
+  process.env.CLIENT_URL                    // for production (from .env)
+];
 
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true // allow cookies to be sent
+}));
+
+// Test route
 app.get('/', (req, res) => {
-    res.send('Hello from server');
+  res.send('Hello from server');
 });
+
+// Route handlers
 app.use('/api/auth', authRouter);
-// 📌 Why we use app.use('/api/auth', authRouter):
-// ------------------------------------------------------
-// This means: "For every route that starts with /api/auth,
-// go and look inside the authRouter file for what to do."
+app.use('/api/user', userRouter);
 
-// For example:
-// If authRouter has a route like: router.post('/login')
-// Then this becomes: POST request to /api/auth/login
-
-// 👉 /api is used to show this is a backend API.
-// 👉 /auth means this part is for authentication (login/register).
-
-app.use('/api/user',userRouter)
+// Start server
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
-
